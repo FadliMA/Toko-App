@@ -4,7 +4,7 @@ Aplikasi desktop manajemen toko (TokoApp) yang dibangun menggunakan Java, Maven,
 
 ## 📸 Screenshot Aplikasi
 <!-- Silakan ganti nama file gambar di bawah ini dengan screenshot aplikasi Anda yang sebenarnya -->
-![Screenshot TokoApp](screenshot.png)
+![Screenshot TokoApp](Screenshot.png)
 
 ## 💻 Persyaratan Sistem
 - Java Development Kit (JDK) 21
