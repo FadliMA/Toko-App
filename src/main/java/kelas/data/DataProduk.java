@@ -16,7 +16,6 @@ import kelas.model.Produk;
 
 public class DataProduk {
     private final ObservableList<Produk> daftar = FXCollections.observableArrayList();
-    private int urutan = 1;
 
     public DataProduk() {
         buatTabelJikaBelumAda();
@@ -41,7 +40,6 @@ public class DataProduk {
             statement.executeUpdate();
 
             daftar.add(p);
-            urutan++;
             return p;
         } catch (SQLException e) {
             throw new RuntimeException("Gagal menyimpan produk ke database.", e);
@@ -114,6 +112,7 @@ public class DataProduk {
     }
 
     private String kodeBerikutnya() {
+        int urutan = 1;
         String kode = String.format("PRD%03d", urutan);
         while (cariIndex(kode) >= 0) {
             urutan++;
@@ -148,7 +147,6 @@ public class DataProduk {
              Statement statement = conn.createStatement();
              ResultSet result = statement.executeQuery(sql)) {
             daftar.clear();
-            urutan = 1;
 
             while (result.next()) {
                 Produk produk = new Produk(
@@ -158,7 +156,6 @@ public class DataProduk {
                         result.getLong("harga")
                 );
                 daftar.add(produk);
-                urutan++;
             }
         } catch (SQLException e) {
             throw new RuntimeException("Gagal mengambil data produk dari database.", e);
