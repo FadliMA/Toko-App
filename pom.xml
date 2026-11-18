@@ -26,6 +26,11 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
             <artifactId>javafx-fxml</artifactId>
             <version>21</version>
         </dependency>
+        <dependency>
+            <groupId>com.mysql</groupId>
+            <artifactId>mysql-connector-j</artifactId>
+            <version>9.1.0</version>
+        </dependency>
     </dependencies>
     <build>
         <plugins>
