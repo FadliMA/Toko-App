@@ -41,6 +41,9 @@ public class FormController {
         } catch (IllegalArgumentException e) {
             pesanLabel.setText(e.getMessage());
             return;
+        } catch (RuntimeException e) {
+            pesanLabel.setText(e.getMessage());
+            return;
         }
 
         try {
