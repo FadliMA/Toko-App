@@ -40,10 +40,17 @@ public class Navigator {
     }
 
     public void bukaForm() throws IOException {
+        bukaForm(null);
+    }
+
+    public void bukaForm(Produk produk) throws IOException {
         FXMLLoader l = loader("form");
         Parent root = l.load();
         FormController c = l.getController();
         c.setKonteks(this, data);
+        if (produk != null) {
+            c.setProdukUntukDiedit(produk);
+        }
         tampil(root);
     }
 

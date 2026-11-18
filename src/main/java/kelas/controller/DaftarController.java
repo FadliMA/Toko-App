@@ -5,6 +5,8 @@ import java.util.Locale;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -71,6 +73,46 @@ public class DaftarController {
             navigator.bukaForm();
         } catch (IOException e) {
             pesanLabel.setText("Form gagal dibuka.");
+        }
+    }
+
+    @FXML
+    private void ubah() {
+        Produk terpilih = tabel.getSelectionModel().getSelectedItem();
+        if (terpilih == null) {
+            pesanLabel.setText("Pilih satu produk dahulu di tabel.");
+            return;
+        }
+        try {
+            navigator.bukaForm(terpilih);
+        } catch (IOException e) {
+            pesanLabel.setText("Form gagal dibuka.");
+        }
+    }
+
+    @FXML
+    private void hapus() {
+        Produk terpilih = tabel.getSelectionModel().getSelectedItem();
+        if (terpilih == null) {
+            pesanLabel.setText("Pilih satu produk dahulu di tabel.");
+            return;
+        }
+
+        Alert konfirmasi = new Alert(Alert.AlertType.CONFIRMATION,
+                "Yakin ingin menghapus produk \"" + terpilih.getNama() + "\"?",
+                ButtonType.YES, ButtonType.NO);
+        konfirmasi.setTitle("Konfirmasi Hapus");
+        konfirmasi.setHeaderText("Hapus Produk");
+        if (konfirmasi.showAndWait().orElse(ButtonType.NO) != ButtonType.YES) {
+            return;
+        }
+
+        try {
+            data.hapus(terpilih.getKode());
+            cari();
+            pesanLabel.setText("Produk berhasil dihapus.");
+        } catch (RuntimeException e) {
+            pesanLabel.setText(e.getMessage());
         }
     }
 

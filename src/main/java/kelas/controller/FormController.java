@@ -2,6 +2,7 @@ package kelas.controller;
 
 import java.io.IOException;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -10,13 +11,16 @@ import kelas.data.DataProduk;
 import kelas.model.Produk;
 
 public class FormController {
+    @FXML private Label judulLabel;
     @FXML private TextField namaField;
     @FXML private ComboBox<String> kategoriBox;
     @FXML private TextField hargaField;
+    @FXML private Button simpanButton;
     @FXML private Label pesanLabel;
 
     private Navigator navigator;
     private DataProduk data;
+    private Produk produkYangDiedit;
 
     @FXML
     private void initialize() {
@@ -29,12 +33,26 @@ public class FormController {
         this.data = data;
     }
 
+    public void setProdukUntukDiedit(Produk produk) {
+        produkYangDiedit = produk;
+        judulLabel.setText("Ubah Produk");
+        namaField.setText(produk.getNama());
+        kategoriBox.setValue(produk.getKategori());
+        hargaField.setText(String.valueOf(produk.getHarga()));
+        simpanButton.setText("Simpan Perubahan");
+    }
+
     @FXML
     private void simpan() {
         Produk produk;
         try {
             long harga = Long.parseLong(hargaField.getText().trim());
-            produk = data.tambah(namaField.getText(), kategoriBox.getValue(), harga);
+            if (produkYangDiedit == null) {
+                produk = data.tambah(namaField.getText(), kategoriBox.getValue(), harga);
+            } else {
+                produk = data.ubah(produkYangDiedit.getKode(), namaField.getText(),
+                        kategoriBox.getValue(), harga);
+            }
         } catch (NumberFormatException e) {
             pesanLabel.setText("Harga harus berupa angka.");
             return;
